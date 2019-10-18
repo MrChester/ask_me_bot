@@ -26,3 +26,8 @@ class TelegramBot:
             message = {"chat_id": chat_id, "text": message_text}
             return message
         return None
+
+        def send_message(self, chat_id, text):
+            url = self.url + self.bot_token
+            + "/" + f"sendmessage?chat_id={chat_id}&text={text}"
+            return requests.get(url)
