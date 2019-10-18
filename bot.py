@@ -12,3 +12,17 @@ class TelegramBot:
         response = requests.get(
             self.url + self.bot_token + "/GetUpdates")
         return response.json()
+
+    def get_message(self):
+        data = self.get_updates()
+
+        last_obj = data["result"][-1]
+        curr_update_id = last_obj["update_id"]
+
+        if self.last_update != curr_update_id:
+            self.last_update = curr_update_id
+            chat_id = last_obj["message"]["chat"]["id"]
+            message_text = last_obj["message"]["text"]
+            message = {"chat_id": chat_id, "text": message_text}
+            return message
+        return None
